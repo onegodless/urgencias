@@ -55,5 +55,5 @@ class Pacientes(object):
         self.setNss(self.instancia_faker.ssn())
         self.setNombre(self.instancia_faker.name())
         self.setEdad(random.randint(18,130))
-        self.setIdHistorial(randint(1000,9999))  
+        self.setIdHistorial(randint(1000,99999))  
         

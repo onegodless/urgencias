@@ -13,10 +13,9 @@ from recepcion import Recepcion
 
 if __name__ == '__main__':
     
+    hora = 0
     instancia_faker = Faker()
-    instancia_recepcion = Recepcion()
-    #hora = instancia_faker.time(pattern="%H:%M", end_datetime=None)
-    
+    instancia_recepcion = Recepcion()    
     ########################################################
     
     for x in range(2):
@@ -27,14 +26,16 @@ if __name__ == '__main__':
         instancia_recepcion.nuevo_paciente()
     
     #####################################################
-    
     while True:
         
+        print str(hora) + ":00"
+        print "###########################"
         instancia_recepcion.print_cola()
         instancia_recepcion.llegada_paciente()
-        asignado_paciente = instancia_recepcion.asignar_medico()
-        print "\n"
+        instancia_recepcion.asignar_medico()
         instancia_recepcion.medico_atiende_paciente()
-            
-        time.sleep(2)
-        
+        time.sleep(3)
+        hora += 1
+        if hora > 23:
+            hora = 0
+        print "########################### \n"
