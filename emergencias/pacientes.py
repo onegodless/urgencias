@@ -9,6 +9,7 @@ from faker import Faker
 import random
 from random import randint
 
+
 class Pacientes(object):
     
     def __init__(self,nss=0,nombre="",edad=0,id_historial=0):

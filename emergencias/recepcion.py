@@ -23,16 +23,16 @@ class Recepcion(object):
         Constructor
         '''
         self.instancia_faker = Faker('en_GB')
-        self.instancia_cola = ColaPacientes()
-        self.diccionario_medicos = {}
+        self.instancia_cola = ColaPacientes() #Cola de pacientes en recepción.
+        self.diccionario_medicos = {} #Diccionario que contiene los médicos.
     
     
     def generar_especialista(self):
         '''
-        Genera médicos y los añade al diccionario.
+        Genera médicos y los añade a diccionario_medicos, asignado a cada médico una cola de la clase ColaPacientes.
         '''
-        nombre_medico = self.instancia_faker.name()
-        self.diccionario_medicos[nombre_medico] = ColaPacientes()
+        nombre_medico = self.instancia_faker.name() #Nombre de médicos generados con faker.
+        self.diccionario_medicos[nombre_medico] = ColaPacientes() 
     
     
     def nuevo_paciente(self):
@@ -41,17 +41,31 @@ class Recepcion(object):
         Llama a la clase cola_pacientes para encolar el nuevo paciente.
         '''
         instancia_pacientes = Pacientes()
-        instancia_pacientes.generar_paciente()
-        self.instancia_cola.nuevo_paciente(instancia_pacientes)        
+        instancia_pacientes.generar_paciente() #genera un paciente con datos aleatorios.
+        self.instancia_cola.nuevo_paciente(instancia_pacientes) #Encola al paciente en la cola de recepción.   
         return instancia_pacientes
     
-
+    
+    def llegada_paciente(self):
+        '''
+        Determina de forma aleatoría si nuevo paciente llega a urgencias para ser atendido.
+        '''
+        chance = random.randint(1,4)
+        if chance > 2: 
+            paciente = self.nuevo_paciente()
+            print "Un nuevo paciente " + str(paciente.getNombre()) + " entra en urgencias."
+            print "Sus datos: " 
+            print paciente  #Imprime los datos del paciente recién llegado invocado la funcion str de Paciente.
+            print "\n"
+            return paciente
+    
+    
     def asignar_medico(self):
         '''
         Asigna el primer paciente de la cola del vestíbulo a uno de los médicos libre, si no hay médicos libres se elige el médico de forma aleatoria.
         '''
         chance = random.randint(1,4) #1 en 4 posobilidades de que un paciente sea asignado a un médico.
-        if chance >= 1:
+        if chance >= 2:
             paciente = self.instancia_cola.proximo_paciente() #Se asigna a la variable paciente el primer paciente de la cola en el vestíbulo.
             if paciente: #Si hay algún paciente en la cola del vestíbulo:
                 for medico in self.diccionario_medicos:
@@ -84,21 +98,7 @@ class Recepcion(object):
         for x in self.diccionario_medicos[medico].lista_pacientes:
             print x.getNombre()                   
            
-           
-    def llegada_paciente(self):
-        '''
-        Determina de forma aleatoría si nuevo paciente llega a urgencias para ser atendido.
-        '''
-        chance = random.randint(0,5)
-        if chance > 2: 
-            paciente = self.nuevo_paciente()
-            print "Un nuevo paciente " + str(paciente.getNombre()) + "entra en urgencias."
-            print "Sus datos: "
-            print paciente
-            print "\n"
-            return paciente
         
-    
     def print_cola(self):
         '''
         Imprime los pacientes esperando en la sala de espera a ser atendidos por recepción.
@@ -116,9 +116,9 @@ class Recepcion(object):
         '''
         Determina de forma aleatoria si los médicos curan al primer paciente de sus respectivas listas.
         '''
-        chance = random.randint(0,5)
+        chance = random.randint(1,4)
         for x in self.diccionario_medicos:
-            if chance > 2: 
+            if chance > 2:
                 paciente_curado = self.diccionario_medicos[x].proximo_paciente()
                 if paciente_curado:
                     print "El paciente " + str(paciente_curado.getNombre()) + " ha sido curado por el Dr." + str(x)
