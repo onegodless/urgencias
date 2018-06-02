@@ -23,8 +23,8 @@ class Recepcion(object):
         Constructor
         '''
         self.instancia_faker = Faker('en_GB')
-        self.instancia_cola = ColaPacientes() #Cola de pacientes en recepción.
-        self.diccionario_medicos = {} #Diccionario que contiene los médicos.
+        #self.instancia_cola = ColaPacientes() #Cola de pacientes en recepción.
+        #self.diccionario_medicos = {} #Diccionario que contiene los médicos.
     
     
     def generar_especialista(self):
@@ -110,7 +110,7 @@ class Recepcion(object):
             print "\n"
         else:
             print "No hay pacientes esperando a ser atendidos por recepción."
-
+            
             
     def medico_atiende_paciente(self):
         '''
@@ -122,4 +122,9 @@ class Recepcion(object):
                 paciente_curado = self.diccionario_medicos[x].proximo_paciente()
                 if paciente_curado:
                     print "El paciente " + str(paciente_curado.getNombre()) + " ha sido curado por el Dr." + str(x)
+                    
+    
+    def devolver_lista_vestibulo(self):
+        
+        return self.instancia_cola.lista_pacientes
     
