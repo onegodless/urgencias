@@ -22,25 +22,29 @@ if __name__ == '__main__':
     instancia_faker = Faker()
     instancia_recepcion = Recepcion() 
     cola_vestibulo = ColaPacientes()   
+    diccionario_medicos = {}
     ########################################################
     
     for x in range(2):
         
-        instancia_recepcion.generar_especialista()
+        instancia_recepcion.generar_especialista(diccionario_medicos)
     
     for x in range(5):
-           
-        instancia_recepcion.nuevo_paciente()
+        
+        instancia_paciente = Pacientes()
+        instancia_paciente.generar_paciente()
+        cola_vestibulo.nuevo_paciente(instancia_paciente)
     
     #####################################################
     while True:
          
         print str(hora) + ":00"
         print "###########################"
-        instancia_recepcion.print_cola()
-        instancia_recepcion.llegada_paciente()
-        instancia_recepcion.asignar_medico()
-        instancia_recepcion.medico_atiende_paciente()
+        instancia_recepcion.print_cola(cola_vestibulo)
+        nuevo_paciente = instancia_recepcion.llegada_paciente()
+        cola_vestibulo.nuevo_paciente(nuevo_paciente)
+        instancia_recepcion.asignar_medico(cola_vestibulo,diccionario_medicos)
+        instancia_recepcion.medico_atiende_paciente(diccionario_medicos)
         time.sleep(3)
         hora += 1
         if hora > 23:

@@ -33,4 +33,8 @@ class ColaPacientes(object):
             return paciente_saliente
         else:
             pass
+    
+    def primero_cola(self):
         
+        return self.lista_pacientes[0]
+    
